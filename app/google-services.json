@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "541386252115",
+    "firebase_url": "https://travel-journal-8a0e0.firebaseio.com",
+    "project_id": "travel-journal-8a0e0",
+    "storage_bucket": "travel-journal-8a0e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541386252115:android:74a1ececc7f182f2",
+        "android_client_info": {
+          "package_name": "com.example.andreea.traveljournal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541386252115-7l6vfbphsgnmftv8aqvus4e2rm03fj41.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXxsrWO81TrWc4SSkcmc4BGtDMF_CO_so"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
