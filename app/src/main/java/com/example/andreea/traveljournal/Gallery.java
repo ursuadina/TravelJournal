@@ -10,6 +10,8 @@ public class Gallery {
     private String startDate;
     private String endDate;
 
+    public Gallery () {}
+
     public Gallery(String mPhotoUrl, String mTitle, String mCountry, double mPrice, double mRating, String typeTrip, String startDate, String endDate) {
         this.mPhotoUrl = mPhotoUrl;
         this.mTitle = mTitle;
