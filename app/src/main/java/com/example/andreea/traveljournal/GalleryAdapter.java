@@ -67,6 +67,48 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
                 return false;
             }
         });
+        viewHolder.mButtonFav.setTag(R.drawable.ic_bookmark_border_black_24dp);
+
+        viewHolder.mButtonFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((Integer)  viewHolder.mButtonFav.getTag() == R.drawable.ic_bookmark_border_black_24dp) {
+                    Toast.makeText(v.getContext(), viewHolder.mTextViewTitle.getText() + " added to favourite", Toast.LENGTH_SHORT).show();
+                    viewHolder.mButtonFav.setImageResource(R.drawable.ic_bookmark_black_24dp);
+                    viewHolder.mButtonFav.setTag(R.drawable.ic_bookmark_black_24dp);
+
+                    CollectionReference dbTrips = mFirestore.collection("favourites");
+                    imageUrl = viewHolder.mImageViewPhoto.getTag().toString();
+                    title = viewHolder.mTextViewTitle.getText().toString();
+                    country = viewHolder.mTextViewCountry.getText().toString();
+                    price = Double.parseDouble(viewHolder.mTextViewPrice.getText().toString());
+                    rating = Double.parseDouble(viewHolder.mTextViewRating.getText().toString());
+                    typeTrip = viewHolder.mTextViewType.getText().toString();
+                    startDate = viewHolder.mTextViewStartDate.getText().toString();
+                    endDate = viewHolder.mTextViewEndDate.getText().toString();
+
+                    Gallery gallery = new Gallery(imageUrl, title, country, price, rating, typeTrip, startDate, endDate);
+                    dbTrips.add(gallery)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    //Toast.makeText(t.getContext(), "Trip added", Toast.LENGTH_SHORT).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //Toast.makeText(v.getContext(), "Error!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    if ((Integer)  viewHolder.mButtonFav.getTag() == R.drawable.ic_bookmark_black_24dp) {
+                        Toast.makeText(v.getContext(), viewHolder.mTextViewTitle.getText() + " removed from favourite", Toast.LENGTH_SHORT).show();
+                        viewHolder.mButtonFav.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+                        viewHolder.mButtonFav.setTag(R.drawable.ic_bookmark_border_black_24dp);
+                    }
+                }
+            }
+        });
         return viewHolder;
     }
 
@@ -80,6 +122,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
         galleryViewHolder.mTextViewCountry.setText(currentGallery.getmCountry());
         galleryViewHolder.mTextViewPrice.setText("" + currentGallery.getmPrice());
         galleryViewHolder.mTextViewRating.setText("" + currentGallery.getmRating());
+        galleryViewHolder.mTextViewType.setText(currentGallery.getTypeTrip());
+        galleryViewHolder.mTextViewStartDate.setText(currentGallery.getStartDate());
+        galleryViewHolder.mTextViewEndDate.setText(currentGallery.getEndDate());
         /*Context context = galleryViewHolder.mImageViewPhoto.getContext();
         int id = context.getResources().getIdentifier(currentGallery.getmPhotoUrl(), "drawable", context.getPackageName());
         galleryViewHolder.mImageViewPhoto.setImageResource(id);*/
@@ -96,40 +141,40 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryViewHolder> {
         startDate = currentGallery.getStartDate();
         endDate = currentGallery.getEndDate();
         rating = currentGallery.getmRating();
-
-        btn = galleryViewHolder.mButtonFav;
-        btn.setTag(R.drawable.ic_bookmark_border_black_24dp);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((Integer) btn.getTag() == R.drawable.ic_bookmark_border_black_24dp) {
-                    Toast.makeText(v.getContext(), currentGallery.getmTitle() + " added to favourite", Toast.LENGTH_SHORT).show();
-                    btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
-                    btn.setTag(R.drawable.ic_bookmark_black_24dp);
-
-                    CollectionReference dbTrips = mFirestore.collection("favourites");
-                    Gallery gallery = new Gallery(imageUrl, title, country, price, rating, typeTrip, startDate, endDate);
-                    dbTrips.add(gallery)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    //Toast.makeText(t.getContext(), "Trip added", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //Toast.makeText(v.getContext(), "Error!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    if ((Integer) btn.getTag() == R.drawable.ic_bookmark_black_24dp) {
-                        //Toast.makeText(v.getContext(), mTextViewTitle.getText().toString() + " removed from favourite", Toast.LENGTH_SHORT).show();
-                        btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
-                        btn.setTag(R.drawable.ic_bookmark_border_black_24dp);
-                    }
-                }
-            }
-        });
+        galleryViewHolder.mImageViewPhoto.setTag(currentGallery.getmPhotoUrl());
+//        btn = galleryViewHolder.mButtonFav;
+//        btn.setTag(R.drawable.ic_bookmark_border_black_24dp);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if ((Integer) btn.getTag() == R.drawable.ic_bookmark_border_black_24dp) {
+//                    Toast.makeText(v.getContext(), currentGallery.getmTitle() + " added to favourite", Toast.LENGTH_SHORT).show();
+//                    btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
+//                    btn.setTag(R.drawable.ic_bookmark_black_24dp);
+//
+//                    CollectionReference dbTrips = mFirestore.collection("favourites");
+//                    Gallery gallery = new Gallery(imageUrl, title, country, price, rating, typeTrip, startDate, endDate);
+//                    dbTrips.add(gallery)
+//                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                @Override
+//                                public void onSuccess(DocumentReference documentReference) {
+//                                    //Toast.makeText(t.getContext(), "Trip added", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            //Toast.makeText(v.getContext(), "Error!", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                } else {
+//                    if ((Integer) btn.getTag() == R.drawable.ic_bookmark_black_24dp) {
+//                        //Toast.makeText(v.getContext(), mTextViewTitle.getText().toString() + " removed from favourite", Toast.LENGTH_SHORT).show();
+//                        btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+//                        btn.setTag(R.drawable.ic_bookmark_border_black_24dp);
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override

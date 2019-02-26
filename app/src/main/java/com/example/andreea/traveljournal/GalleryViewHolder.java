@@ -31,6 +31,9 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
     public TextView mTextViewPrice;
     public TextView mTextViewRating;
     public ImageButton mButtonFav;
+    public TextView mTextViewType;
+    public TextView mTextViewStartDate;
+    public TextView mTextViewEndDate;
     public CardView item_gallery;
 
     private FirebaseFirestore mFirestore;
@@ -45,9 +48,13 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
         mTextViewCountry = itemView.findViewById(R.id.textview_country);
         mTextViewPrice = itemView.findViewById(R.id.textview_price);
         mTextViewRating = itemView.findViewById(R.id.textview_rating);
+        mTextViewType = itemView.findViewById(R.id.textview_type);
+        mTextViewStartDate = itemView.findViewById(R.id.textview_start);
+        mTextViewEndDate = itemView.findViewById(R.id.textview_end);
         mButtonFav = itemView.findViewById(R.id.add_fav);
-        //mButtonFav.setTag(R.drawable.ic_bookmark_border_black_24dp);
+        mButtonFav.setTag(R.drawable.ic_bookmark_border_black_24dp);
         item_gallery = (CardView) itemView.findViewById(R.id.item_gallery);
+
 //        mButtonFav.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -56,18 +63,18 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
 //                    mButtonFav.setImageResource(R.drawable.ic_bookmark_black_24dp);
 //                    mButtonFav.setTag(R.drawable.ic_bookmark_black_24dp);
 //
-//                    CollectionReference dbTrips = mFirestore.collection("trips");
+//                    CollectionReference dbTrips = mFirestore.collection("favourites");
 //                    Gallery gallery = new Gallery(imageUrl, title, country, price, rating, typeTrip, startDate, endDate);
 //                    dbTrips.add(gallery)
 //                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
 //                                @Override
 //                                public void onSuccess(DocumentReference documentReference) {
-//                                    Toast.makeText(getApplicationContext(), "Trip added", Toast.LENGTH_SHORT).show();
+//                                   // Toast.makeText(v.getContext(), "Trip added", Toast.LENGTH_SHORT).show();
 //                                }
 //                            }).addOnFailureListener(new OnFailureListener() {
 //                        @Override
 //                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
+//                            //.makeText(get(), "Error!", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
 //                } else {
@@ -81,6 +88,7 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder {
 //        });
 
     }
+
     public void bind(final DocumentSnapshot snapshot,
                      final GalleryAdapter.OnGallerySelectedListener listener) {
 
